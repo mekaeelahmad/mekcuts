@@ -2,25 +2,15 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const helmet = require('helmet');
 require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(helmet()); // Use Helmet to secure Express headers
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public')); // Serve static files from the "public" directory
-
-// Redirect HTTP to HTTPS
-app.use((req, res, next) => {
-    if (req.headers['x-forwarded-proto'] !== 'https') {
-        return res.redirect(`https://${req.headers.host}${req.url}`);
-    }
-    next();
-});
 
 // Route to handle booking form submission
 app.post('/send', (req, res) => {
@@ -40,7 +30,7 @@ app.post('/send', (req, res) => {
         from: process.env.EMAIL_USER, // Use environment variables
         to: process.env.RECIPIENT_EMAIL_USER,   // Use environment variables
         subject: 'New mekcuts Booking Request',
-        text: `Someone is looking for a haircut. \nHere is their information:\n\nDate: ${date}\nTime: ${time}\nPhone: ${phone}`
+        text: `Someone is looking for a haircut. /n Here is their information:\n\nDate: ${date}\nTime: ${time}\nPhone: ${phone}`
     };
 
     // Send mail with defined transport object
