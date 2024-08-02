@@ -28,7 +28,7 @@ app.post('/send', (req, res) => {
     // Set up email data
     let mailOptions = {
         from: process.env.EMAIL_USER, // Use environment variables
-        to: process.env.EMAIL_USER,   // Use environment variables
+        to: process.env.RECIPIENT_EMAIL_USER,   // Use environment variables
         subject: 'New Booking Request',
         text: `New booking request received:\n\nDate: ${date}\nTime: ${time}\nPhone: ${phone}`
     };
