@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment - MekCuts</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to Google Fonts for Karla -->
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="https://7f6d744e0e23d23cfeba.cdn6.editmysite.com/uploads/b/7f6d744e0e23d23cfeba792697c373eaee02ea542a5f81c56a2cea315fd84faa/mekcuts_1641246287.jpg?width=2400&amp;optimize=medium" alt="mekcuts logo" class="logo">
+    </header>
+
+    <!-- Booking Section -->
+    <section id="booking">
+        <h2>Book an Appointment</h2>
+        <form id="bookingForm">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Select Time:</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <button type="submit"><b>Submit booking</b></button>
+        </form>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 mekcuts. All rights reserved.</p>
+            <img src="https://7f6d744e0e23d23cfeba.cdn6.editmysite.com/uploads/b/7f6d744e0e23d23cfeba792697c373eaee02ea542a5f81c56a2cea315fd84faa/mekcuts_1641246287.jpg?width=2400&amp;optimize=medium" alt="mekcuts logo" class="footer-logo">
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const phone = document.getElementById('phone').value;
+
+            fetch('http://localhost:5000/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date: date, time: time, phone: phone })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                document.getElementById('bookingForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to send your appointment request. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
