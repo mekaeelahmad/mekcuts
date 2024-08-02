@@ -45,12 +45,16 @@
             const time = document.getElementById('time').value;
             const phone = document.getElementById('phone').value;
 
-            fetch('http://localhost:5000/send', {
+            const serverUrl = window.location.hostname === 'localhost'
+                ? 'http://localhost:5000'
+                : 'https://mekcuts-website-babefc260d16.herokuapp.com'; // Replace with your actual Heroku app name
+
+            fetch(`${serverUrl}/send`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ date: date, time: time, phone: phone })
+                body: JSON.stringify({ date, time, phone })
             })
             .then(response => response.text())
             .then(data => {
